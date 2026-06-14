@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Untuk Rachel ✨</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Gochi+Hand&family=Patrick+Hand&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* ─── RESET & BASE ─────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --page1-bg: #fdf3c8;
+    --page1-line: #e8d98a;
+    --page1-ink: #5a4200;
+    --page2-bg: #fde8ec;
+    --page2-line: #f5b8c4;
+    --page2-ink: #7a2030;
+    --page3-bg: #daf0fa;
+    --page3-line: #9bd4ee;
+    --page3-ink: #1a4a6a;
+    --page4-bg: #ede0f5;
+    --page4-line: #c9a8e0;
+    --page4-ink: #3a1a5a;
+  }
+  body { font-family: 'Inter', sans-serif; overflow: hidden; height: 100dvh; width: 100vw; }
+
+  /* ─── FLOATING SPARKLES ───────────────────────── */
+  .sparkle {
+    position: fixed; pointer-events: none; z-index: 9999;
+    animation: floatUp 6s ease-in infinite;
+    opacity: 0; font-size: 1.1rem; user-select: none;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; }
+    10%  { opacity: 1; }
+    80%  { opacity: 0.7; }
+    100% { transform: translateY(-90vh) rotate(360deg) scale(1.2); opacity: 0; }
+  }
+
+  /* ─── PHASE 1: LOCK SCREEN ───────────────────── */
+  #phase1 {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at 30% 40%, #1a0a2e 0%, #0d0618 60%, #050210 100%);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  #phase1.fade-out { opacity: 0; transform: scale(1.05); pointer-events: none; }
+
+  .lock-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    max-width: 420px; width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 60px rgba(150, 80, 255, 0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .lock-emoji { font-size: 3rem; display: block; margin-bottom: 1rem; animation: pulse 2.5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1);}50%{transform:scale(1.12);} }
+  .lock-title { font-family: 'Caveat', cursive; font-size: 1.9rem; font-weight: 700; color: #e8d0ff; margin-bottom: 0.5rem; }
+  .lock-subtitle { font-size: 0.85rem; color: rgba(255,255,255,0.4); margin-bottom: 2rem; letter-spacing: 0.05em; }
+  .lock-label { font-family: 'Caveat', cursive; font-size: 1.1rem; color: rgba(255,255,255,0.7); margin-bottom: 0.8rem; display: block; }
+  .lock-input {
+    width: 100%; padding: 0.85rem 1.2rem;
+    background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 14px; color: #fff; font-size: 1rem; font-family: 'Caveat', cursive; font-size: 1.2rem;
+    outline: none; text-align: center; letter-spacing: 0.1em;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .lock-input:focus { border-color: #c084fc; box-shadow: 0 0 0 3px rgba(192,132,252,0.2); }
+  .lock-input.error { border-color: #f87171; animation: shake 0.45s ease; }
+  .lock-input.success { border-color: #86efac; box-shadow: 0 0 0 3px rgba(134,239,172,0.2); }
+  @keyframes shake {
+    0%,100%{transform:translateX(0);}15%{transform:translateX(-8px);}30%{transform:translateX(8px);}
+    45%{transform:translateX(-6px);}60%{transform:translateX(6px);}75%{transform:translateX(-3px);}90%{transform:translateX(3px);}
+  }
+  .lock-hint { font-size: 0.82rem; color: #f87171; margin-top: 0.7rem; min-height: 1.2em; opacity: 0; transition: opacity 0.3s; font-family: 'Caveat', cursive; font-size: 1rem; }
+  .lock-hint.show { opacity: 1; }
+  .lock-btn {
+    margin-top: 1.5rem; width: 100%; padding: 0.85rem;
+    background: linear-gradient(135deg, #7c3aed, #a855f7, #c084fc);
+    border: none; border-radius: 14px; color: #fff; font-family: 'Caveat', cursive; font-size: 1.3rem;
+    cursor: pointer; letter-spacing: 0.05em;
+    box-shadow: 0 4px 20px rgba(168,85,247,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .lock-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(168,85,247,0.5); }
+  .lock-btn:active { transform: translateY(0); }
+  .stars-bg { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+  .star { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; animation: twinkle var(--d) ease-in-out infinite var(--delay); }
+  @keyframes twinkle { 0%,100%{opacity:0.2;}50%{opacity:1;} }
+
+  /* ─── PHASE 2: DASHBOARD ─────────────────────── */
+  #phase2 {
+    position: fixed; inset: 0; z-index: 50;
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #fdf0f7 0%, #f3e8ff 40%, #e8f4fd 100%);
+    overflow: hidden;
+  }
+  #phase2.active { display: flex; }
+  #phase2.slide-in { animation: slideIn 0.8s cubic-bezier(0.22,1,0.36,1) forwards; }
+  @keyframes slideIn { from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);} }
+  #phase2.slide-out { animation: slideOut 0.7s cubic-bezier(0.4,0,1,1) forwards; }
+  @keyframes slideOut { from{opacity:1;transform:scale(1);}to{opacity:0;transform:scale(0.92);} }
+
+  /* Decorative bg blobs */
+  .blob {
+    position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none; z-index: 0;
+    animation: blobFloat 8s ease-in-out infinite;
+  }
+  @keyframes blobFloat { 0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(20px,-20px) scale(1.05);} }
+
+  /* Music player */
+  .music-card {
+    position: relative; z-index: 1;
+    background: rgba(255,255,255,0.75); backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(255,255,255,0.9);
+    border-radius: 24px; padding: 1.5rem 2rem;
+    max-width: 380px; width: 90%;
+    box-shadow: 0 8px 40px rgba(168,85,247,0.15), 0 2px 8px rgba(0,0,0,0.06);
+    display: flex; align-items: center; gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  .vinyl {
+    width: 68px; height: 68px; border-radius: 50%; flex-shrink: 0;
+    /* ← REPLACE: swap this gradient with your album art image */
+    background: conic-gradient(#7c3aed 0deg, #a855f7 60deg, #ec4899 120deg, #f59e0b 180deg, #10b981 240deg, #3b82f6 300deg, #7c3aed 360deg);
+    position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    transition: animation-play-state 0.3s;
+  }
+  .vinyl::after {
+    content: ''; position: absolute; inset: 50%; transform: translate(-50%,-50%);
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #fff; box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+  }
+  .vinyl.spinning { animation: spin 3s linear infinite; }
+  @keyframes spin { from{transform:rotate(0);}to{transform:rotate(360deg);} }
+  .vinyl.spinning::after { animation: counter-spin 3s linear infinite; }
+  @keyframes counter-spin { from{transform:translate(-50%,-50%) rotate(0);}to{transform:translate(-50%,-50%) rotate(-360deg);} }
+
+  .music-info { flex: 1; min-width: 0; }
+  .music-title { font-family: 'Caveat', cursive; font-size: 1.2rem; font-weight: 700; color: #3a1a5a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .music-artist { font-size: 0.78rem; color: #9874b8; margin-bottom: 0.6rem; }
+  .progress-bar { width: 100%; height: 4px; background: #e0d0f0; border-radius: 4px; overflow: hidden; cursor: pointer; margin-bottom: 0.4rem; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #a855f7, #ec4899); border-radius: 4px; width: 0%; transition: width 0.5s linear; }
+  .music-times { display: flex; justify-content: space-between; font-size: 0.7rem; color: #b08ad0; margin-bottom: 0.5rem; }
+  .music-controls { display: flex; align-items: center; gap: 0.6rem; }
+  .play-btn {
+    width: 38px; height: 38px; border-radius: 50%; border: none; cursor: pointer;
+    background: linear-gradient(135deg, #a855f7, #7c3aed);
+    color: #fff; font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 3px 12px rgba(168,85,247,0.4); transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .play-btn:hover { transform: scale(1.1); box-shadow: 0 5px 18px rgba(168,85,247,0.5); }
+  .music-note { font-size: 0.9rem; }
+
+  /* Open notebook button */
+  .open-btn {
+    position: relative; z-index: 1;
+    padding: 1rem 2.5rem; border: none; border-radius: 20px; cursor: pointer;
+    background: linear-gradient(135deg, #f472b6, #a855f7, #818cf8);
+    color: #fff; font-family: 'Caveat', cursive; font-size: 1.5rem; font-weight: 700;
+    letter-spacing: 0.03em;
+    box-shadow: 0 6px 30px rgba(168,85,247,0.4), 0 2px 8px rgba(244,114,182,0.3);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+    animation: gentleBounce 3s ease-in-out infinite;
+  }
+  @keyframes gentleBounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);} }
+  .open-btn:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 12px 40px rgba(168,85,247,0.5); animation: none; }
+  .open-btn:active { transform: scale(0.97); }
+
+  .dashboard-deco { position: absolute; z-index: 0; font-size: 1.4rem; opacity: 0.35; user-select: none; animation: floatDeco var(--d) ease-in-out infinite; pointer-events: none; }
+  @keyframes floatDeco { 0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-12px) rotate(8deg);} }
+
+  /* ─── PHASE 3: NOTEBOOK ──────────────────────── */
+  #phase3 {
+    position: fixed; inset: 0; z-index: 40;
+    display: none; align-items: center; justify-content: center;
+    transition: background 0.6s ease;
+  }
+  #phase3.active { display: flex; }
+  #phase3.anim-in { animation: notebookIn 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
+  @keyframes notebookIn { from{opacity:0;transform:perspective(800px) rotateX(20deg) scale(0.8);}to{opacity:1;transform:perspective(800px) rotateX(0) scale(1);} }
+
+  .notebook-outer {
+    position: relative; z-index: 1;
+    width: min(720px, 96vw); max-height: 94dvh;
+    perspective: 1400px;
+  }
+  .notebook-wrap {
+    position: relative;
+    width: 100%; border-radius: 12px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.15);
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.25,1,0.5,1);
+    overflow: hidden;
+  }
+
+  /* Spiral binding */
+  .spiral-side {
+    position: absolute; top: 0; bottom: 0; left: -18px;
+    width: 18px; z-index: 10; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center;
+  }
+  .spiral-ring {
+    width: 16px; height: 16px; border: 3px solid rgba(0,0,0,0.3);
+    border-radius: 50%; background: rgba(255,255,255,0.6);
+  }
+
+  /* Page */
+  .page {
+    position: absolute; inset: 0;
+    padding: 1.8rem 2rem 1.8rem 2.4rem;
+    overflow-y: auto; overflow-x: hidden;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.55s ease, transform 0.55s ease;
+    transform: translateX(40px);
+    min-height: 500px;
+  }
+  .page.active { opacity: 1; pointer-events: auto; transform: translateX(0); }
+  .page.exit-left { opacity: 0; transform: translateX(-40px); }
+  .page.enter-right { opacity: 0; transform: translateX(40px); }
+
+  /* Page theming */
+  .page-1 { background: var(--page1-bg); }
+  .page-2 { background: var(--page2-bg); }
+  .page-3 { background: var(--page3-bg); }
+  .page-4 { background: var(--page4-bg); }
+
+  /* Notebook lines */
+  .lines-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: repeating-linear-gradient(transparent, transparent 31px, var(--line-color) 31px, var(--line-color) 32px);
+    background-position: 0 48px;
+  }
+  .page-1 .lines-bg { --line-color: var(--page1-line); }
+  .page-2 .lines-bg { --line-color: var(--page2-line); }
+  .page-3 .lines-bg { --line-color: var(--page3-line); }
+  .page-4 .lines-bg { --line-color: var(--page4-line); }
+
+  /* Red margin line */
+  .margin-line {
+    position: absolute; top: 0; bottom: 0; left: 52px;
+    width: 1.5px; pointer-events: none; z-index: 1;
+  }
+  .page-1 .margin-line { background: rgba(255,120,120,0.4); }
+  .page-2 .margin-line { background: rgba(255,120,120,0.35); }
+  .page-3 .margin-line { background: rgba(255,120,120,0.3); }
+  .page-4 .margin-line { background: rgba(200,100,220,0.4); }
+
+  /* Torn edge at top */
+  .torn-edge {
+    position: absolute; top: -1px; left: 0; right: 0; height: 18px;
+    pointer-events: none; z-index: 5;
+    background: inherit;
+    clip-path: polygon(0 0,3% 100%,6% 30%,9% 90%,12% 20%,15% 80%,18% 10%,21% 70%,24% 5%,27% 65%,30% 15%,33% 75%,36% 8%,39% 68%,42% 12%,45% 72%,48% 3%,51% 60%,54% 18%,57% 78%,60% 5%,63% 62%,66% 22%,69% 80%,72% 10%,75% 68%,78% 15%,81% 75%,84% 8%,87% 65%,90% 20%,93% 78%,96% 12%,100% 60%,100% 0);
+  }
+
+  /* Handwritten content */
+  .hw { font-family: 'Caveat', cursive; font-size: clamp(1.05rem, 2.2vw, 1.25rem); line-height: 2; position: relative; z-index: 2; }
+  .page-1 .hw { color: var(--page1-ink); }
+  .page-2 .hw { color: var(--page2-ink); }
+  .page-3 .hw { color: var(--page3-ink); }
+  .page-4 .hw { color: var(--page4-ink); }
+
+  /* Page header */
+  .page-header {
+    font-family: 'Gochi Hand', cursive; font-size: clamp(1.3rem, 3vw, 1.6rem);
+    margin-bottom: 0.4rem; position: relative; z-index: 2;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .page-1 .page-header { color: #b07d00; }
+  .page-2 .page-header { color: #b02050; }
+  .page-3 .page-header { color: #1a5a8a; }
+  .page-4 .page-header { color: #5a1a8a; }
+
+  /* Stickers / doodles */
+  .sticker { position: absolute; z-index: 3; font-size: 1.6rem; user-select: none; pointer-events: none; animation: stickerWiggle 4s ease-in-out infinite; }
+  @keyframes stickerWiggle { 0%,100%{transform:rotate(var(--r,0deg)) scale(1);}50%{transform:rotate(calc(var(--r,0deg) + 5deg)) scale(1.05);} }
+
+  /* Polaroid photos */
+  .polaroid {
+    position: absolute; z-index: 4;
+    background: #fff;
+    padding: 8px 8px 28px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    cursor: default;
+  }
+  .polaroid:hover { transform: var(--tilt) scale(1.05) !important; }
+  .polaroid-img {
+    width: 100%; height: 100%; object-fit: cover;
+    /* ← REPLACE src in HTML below with your actual photo paths */
+    background: linear-gradient(135deg, #d0d0d0 0%, #f0f0f0 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; color: #aaa;
+  }
+  .polaroid-caption { font-family: 'Caveat', cursive; font-size: 0.85rem; text-align: center; margin-top: 4px; color: #555; }
+  .tape {
+    position: absolute; z-index: 5; width: 48px; height: 18px;
+    background: rgba(255,255,220,0.55); top: -10px; left: 50%; transform: translateX(-50%) rotate(-3deg);
+    border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  /* Page nav controls */
+  .page-controls {
+    position: absolute; bottom: 18px; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: center; gap: 1rem; z-index: 10;
+  }
+  .nav-btn {
+    width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(255,255,255,0.7); backdrop-filter: blur(8px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .nav-btn:hover { transform: scale(1.12); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .page-dots { display: flex; gap: 6px; align-items: center; }
+  .page-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(0,0,0,0.2); cursor: pointer; transition: background 0.3s, transform 0.3s;
+  }
+  .page-dot.active { background: rgba(0,0,0,0.5); transform: scale(1.3); }
+
+  /* Close / back button */
+  .back-btn {
+    position: fixed; top: 14px; left: 14px; z-index: 200;
+    background: rgba(255,255,255,0.8); border: none; border-radius: 50%;
+    width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15); display: none;
+    transition: transform 0.2s;
+  }
+  .back-btn:hover { transform: scale(1.1); }
+  .back-btn.visible { display: flex; align-items: center; justify-content: center; }
+
+  /* Responsive notebook height */
+  .notebook-wrap { min-height: min(580px, 85dvh); }
+
+  /* Floating mini sparkles inside notebook */
+  .nb-sparkle { position: absolute; z-index: 3; font-size: 1rem; pointer-events: none; animation: nbFloat var(--d) ease-in-out infinite; opacity: 0.6; }
+  @keyframes nbFloat { 0%,100%{transform:translateY(0) scale(1) rotate(0deg);}50%{transform:translateY(-8px) scale(1.15) rotate(15deg);} }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════ -->
+<!--  GLOBAL FLOATING SPARKLES                      -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="sparkles-container"></div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!--  PHASE 1 – LOCK SCREEN                         -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="phase1">
+  <!-- Twinkling star background -->
+  <div class="stars-bg" id="starsBg"></div>
+
+  <div class="lock-card" style="position:relative;z-index:2;">
+    <span class="lock-emoji">🔐</span>
+    <div class="lock-title">Hey, siapa kamu? ✨</div>
+    <div class="lock-subtitle">hanya orang yang tepat yang bisa masuk</div>
+
+    <label class="lock-label" for="codeInput">masukan code rahasia</label>
+    <div style="font-family:'Caveat',cursive;font-size:0.95rem;color:rgba(255,255,255,0.45);margin-bottom:0.9rem;font-style:italic;">clue: panggilan 💭</div>
+
+    <input
+      id="codeInput" class="lock-input" type="text"
+      placeholder="ketik disini..." autocomplete="off" spellcheck="false"
+    />
+    <div id="lockHint" class="lock-hint">salah nih~ coba lagi yuk 🙈</div>
+
+    <button class="lock-btn" onclick="checkCode()">masuk ✨</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!--  PHASE 2 – DASHBOARD                           -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="phase2">
+  <!-- Decorative blobs -->
+  <div class="blob" style="width:380px;height:380px;background:rgba(236,72,153,0.18);top:-60px;left:-80px;--delay:0s;"></div>
+  <div class="blob" style="width:300px;height:300px;background:rgba(168,85,247,0.2);bottom:-40px;right:-60px;--delay:2s;animation-delay:2s;"></div>
+  <div class="blob" style="width:220px;height:220px;background:rgba(96,165,250,0.15);bottom:60px;left:40px;--delay:1s;animation-delay:1s;"></div>
+
+  <!-- Floating deco emojis -->
+  <span class="dashboard-deco" style="top:8%;left:5%;--d:5s;">🌸</span>
+  <span class="dashboard-deco" style="top:12%;right:8%;--d:7s;animation-delay:1s;">⭐</span>
+  <span class="dashboard-deco" style="bottom:15%;left:8%;--d:6s;animation-delay:2s;">🌙</span>
+  <span class="dashboard-deco" style="bottom:20%;right:5%;--d:8s;animation-delay:0.5s;">💫</span>
+  <span class="dashboard-deco" style="top:50%;left:3%;--d:9s;animation-delay:3s;">✨</span>
+  <span class="dashboard-deco" style="top:55%;right:3%;--d:4.5s;animation-delay:1.5s;">🫧</span>
+
+  <!-- MUSIC PLAYER CARD -->
+  <div class="music-card">
+    <!-- VINYL / Album art – spinning disc -->
+    <!-- ← To use your own album art: set background-image on .vinyl and remove the conic-gradient -->
+    <div class="vinyl" id="vinyl"></div>
+
+    <div class="music-info">
+      <!-- ← REPLACE: Song title and artist -->
+      <div class="music-title" id="songTitle">Pencet yah</div>
+      <div class="music-artist">ehehe</div>
+
+      <!-- Progress bar -->
+      <div class="progress-bar" id="progressBar" onclick="seekTrack(event)">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="music-times">
+        <span id="currentTime">0:00</span>
+        <span id="totalTime">3:47</span><!-- ← update when you link real MP3 -->
+      </div>
+
+      <div class="music-controls">
+        <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+        <span class="music-note">🎶</span>
+        <span style="font-size:0.75rem;color:#c084fc;font-family:'Caveat',cursive;"> nikmati lagunya ~</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPEN NOTEBOOK BUTTON -->
+  <button class="open-btn" id="openNotebookBtn" onclick="openNotebook()">
+    Buka Surat untuk Rachel ✨
+  </button>
+
+  <div style="position:relative;z-index:1;margin-top:1rem;font-family:'Caveat',cursive;font-size:1rem;color:rgba(100,50,150,0.55);">
+    ada sesuatu untukmu di sini 🫶
+  </div>
+</div>
+
+<!-- BACK BUTTON (visible in phase 3) -->
+<button class="back-btn" id="backBtn" onclick="goBack()">←</button>
+
+<!-- ══════════════════════════════════════════════ -->
+<!--  PHASE 3 – NOTEBOOK                            -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="phase3" style="background: #fdf3c8;">
+  <div class="notebook-outer">
+    <!-- Spiral binding decoration -->
+    <div class="spiral-side" id="spiralSide"></div>
+
+    <div class="notebook-wrap" id="notebookWrap">
+
+      <!-- ░░░░ PAGE 1 – VINTAGE YELLOW ░░░░ -->
+      <div class="page page-1 active" id="page-0">
+        <div class="lines-bg"></div>
+        <div class="margin-line"></div>
+        <div class="torn-edge"></div>
+
+        <!-- Notebook header -->
+        <div class="page-header" style="padding-left:48px;">📓 halaman 1</div>
+
+        <!-- Handwritten text -->
+        <div class="hw" style="padding-left:48px;padding-right:8px;padding-top:0.3rem;">
+          emmm, haloo rachell 👋🥺<br>
+          makaciw yahh udah temanin<br>
+          aku yg kesepian inih, walau<br>
+          sebentar hehe tapi gapapa kok.<br><br>
+          aku tau perasaan kamu,<br>
+          akuu cuman mauu ucapin<br>
+          makasih ajaahh, makasih kamu<br>
+          selalu ada buat aku ✨
+        </div>
+
+        <!-- Sticker doodles -->
+        <span class="sticker" style="top:38px;right:16px;--r:-8deg;font-size:2rem;">🌻</span>
+        <span class="nb-sparkle" style="top:25%;right:8%;--d:4s;">✨</span>
+        <span class="nb-sparkle" style="bottom:30%;right:12%;--d:5.5s;">⭐</span>
+
+        <!-- Polaroid photo placeholder (top-right) -->
+        <!-- ← REPLACE the emoji inside with an <img> tag pointing to your photo -->
+        <div class="polaroid" style="width:100px;height:120px;right:12px;top:90px;transform:rotate(6deg);--tilt:rotate(6deg);">
+          <div class="tape"></div>
+          <img src="rachel1.jpg" style="width:100%;height:90px;object-fit:cover;display:block;" alt="rachel1" />
+          <div class="polaroid-caption"></div>
+        </div>
+
+        <span class="nb-sparkle" style="bottom:18%;left:20%;--d:6s;">💛</span>
+        <span class="sticker" style="bottom:55px;right:18px;--r:5deg;font-size:1.3rem;">⭐</span>
+      </div>
+
+      <!-- ░░░░ PAGE 2 – SOFT PINK ░░░░ -->
+      <div class="page page-2" id="page-1">
+        <div class="lines-bg"></div>
+        <div class="margin-line"></div>
+        <div class="torn-edge"></div>
+
+        <div class="page-header" style="padding-left:48px;">💌 halaman 2</div>
+        <div class="hw" style="padding-left:48px;padding-right:8px;padding-top:0.3rem;">
+          makasih bnyk kamu udah buat<br>
+          aku seneng, makasihhh yahhh ✨<br><br>
+          akuu sebenarnya gamauuu<br>
+          putus dari kamuu 💔 tapii aku<br>
+          gamau nge tahan kamu juga,<br>
+          karna akuu gamauu kamu<br>
+          capee sendiri hehe.<br><br>
+          akuu masih sayang kamuu ❤️‍🩹<br>
+          semoga kamu Nemu cowo yg<br>
+          lebih dari aku, and ga LDR ehehe.
+        </div>
+
+        <!-- Stickers -->
+        <span class="sticker" style="top:40px;right:18px;--r:10deg;font-size:1.8rem;">🌷</span>
+        <span class="nb-sparkle" style="top:20%;right:10%;--d:3.5s;">💕</span>
+        <span class="nb-sparkle" style="bottom:25%;right:6%;--d:5s;">🌸</span>
+        <span class="sticker" style="bottom:52px;left:60px;--r:-5deg;font-size:1.4rem;">💗</span>
+
+        <!-- Polaroid (bottom-left) -->
+        <div class="polaroid" style="width:90px;height:110px;left:60px;bottom:60px;transform:rotate(-5deg);--tilt:rotate(-5deg);">
+          <div class="tape"></div>
+          <img src="rachel2.jpg" style="width:100%;height:80px;object-fit:cover;display:block;" alt="rachel2" />
+          <div class="polaroid-caption"></div>
+        </div>
+      </div>
+
+      <!-- ░░░░ PAGE 3 – PASTEL BLUE ░░░░ -->
+      <div class="page page-3" id="page-2">
+        <div class="lines-bg"></div>
+        <div class="margin-line"></div>
+        <div class="torn-edge"></div>
+
+        <div class="page-header" style="padding-left:48px;">🌊 halaman 3</div>
+        <div class="hw" style="padding-left:48px;padding-right:8px;padding-top:0.3rem;">
+          mungkin ini terakhir kali nya<br>
+          aku bilang gini ke kamu,<br>
+          ilooove youu, akuu sayang<br>
+          kamuu 💕<br><br>
+          kamuu jaga diri yahh disanaa,<br>
+          jaga pola makan kamuu 🍱<br>
+          jangann keseringan<br>
+          begadangg 🌙<br><br>
+          oh yahh gimanaa kamu keterima<br>
+          ga itu skolahnya? kalo keterimaa<br>
+          akuu bangga bgt sama kamuu 🎉!
+        </div>
+
+        <!-- Stickers -->
+        <span class="sticker" style="top:36px;right:14px;--r:-6deg;font-size:1.9rem;">🌙</span>
+        <span class="nb-sparkle" style="top:22%;right:9%;--d:4.5s;">⭐</span>
+        <span class="nb-sparkle" style="bottom:28%;right:14%;--d:6.5s;">💙</span>
+
+        <!-- Polaroid (top-right) -->
+        <div class="polaroid" style="width:100px;height:120px;right:10px;top:88px;transform:rotate(-7deg);--tilt:rotate(-7deg);">
+          <div class="tape"></div>
+          <img src="rachel3.jpg" style="width:100%;height:90px;object-fit:cover;display:block;" alt="rachel3" />
+          <div class="polaroid-caption"></div>
+        </div>
+
+        <span class="sticker" style="bottom:58px;left:56px;--r:8deg;font-size:1.2rem;">✨</span>
+      </div>
+
+      <!-- ░░░░ PAGE 4 – LAVENDER / DARK MOODY ░░░░ -->
+      <div class="page page-4" id="page-3">
+        <div class="lines-bg"></div>
+        <div class="margin-line"></div>
+        <div class="torn-edge"></div>
+
+        <div class="page-header" style="padding-left:48px;">🌙 halaman 4</div>
+        <div class="hw" style="padding-left:48px;padding-right:8px;padding-top:0.3rem;">
+          kalauu ga keterimaa yang sabar<br>
+          yahh, mungkin belum rezeki 🫂<br><br>
+          oh ya kayanya sudah malam<br>
+          yahh, yaudah deh udah dluu okayy<br><br>
+          oh ya ini aku buatnya setelah<br>
+          kita break, and baru jadi sekarang.<br><br>
+          oh yah udah dlu yahhh,<br>
+          bye byee, goodnight<br>
+          semoga kita ketemu lagiii<br>
+          babayyyyy 👋✨🌙
+        </div>
+
+        <!-- Stickers -->
+        <span class="sticker" style="top:36px;right:16px;--r:4deg;font-size:1.8rem;">💜</span>
+        <span class="nb-sparkle" style="top:18%;right:8%;--d:5s;">🌟</span>
+        <span class="nb-sparkle" style="bottom:32%;right:10%;--d:4s;">✨</span>
+
+        <!-- Two polaroids -->
+<div class="polaroid" style="width:88px;height:108px;right:10px;top:80px;transform:rotate(6deg);--tilt:rotate(6deg);">
+  <div class="tape" style="transform:translateX(-50%) rotate(5deg);"></div>
+  <img src="rachel4.jpg"
+       style="width:100%;height:78px;object-fit:cover;display:block;"
+       alt="rachel4">
+  <div class="polaroid-caption"></div>
+</div>
+
+<div class="polaroid" style="width:80px;height:100px;left:56px;bottom:68px;transform:rotate(-6deg);--tilt:rotate(-6deg);">
+  <div class="tape" style="transform:translateX(-50%) rotate(-4deg);"></div>
+  <img src="rachel5.jpg"
+       style="width:100%;height:68px;object-fit:cover;display:block;"
+       alt="rachel5">
+  <div class="polaroid-caption">🌙 goodnight</div>
+</div>
+
+        <span class="sticker" style="bottom:42px;right:20%;--r:-8deg;font-size:1.5rem;">🫧</span>
+      </div>
+
+      <!-- Spacer for nav buttons -->
+      <div style="height:70px;"></div>
+
+      <!-- PAGE NAVIGATION -->
+      <div class="page-controls">
+        <button class="nav-btn" id="prevBtn" onclick="changePage(-1)" disabled>◀</button>
+        <div class="page-dots" id="pageDots"></div>
+        <button class="nav-btn" id="nextBtn" onclick="changePage(1)">▶</button>
+      </div>
+
+    </div><!-- /notebook-wrap -->
+  </div><!-- /notebook-outer -->
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!--  AUDIO ELEMENT                                 -->
+<!--  ← REPLACE `src` with your actual MP3 URL     -->
+<!-- ══════════════════════════════════════════════ -->
+<audio id="audioPlayer" loop>
+  <source src="hal.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ══════════════════════════════════════════════ -->
+<!--  JAVASCRIPT                                    -->
+<!-- ══════════════════════════════════════════════ -->
+<script>
+/* ─── SPARKLES ───────────────────────────────── */
+const sparkleEmojis = ['✨','⭐','💫','🌸','🌟','💕','🌙','🫧','💛','💜','🩷'];
+const container = document.getElementById('sparkles-container');
+
+function spawnSparkle() {
+  const el = document.createElement('span');
+  el.className = 'sparkle';
+  el.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.bottom = '-20px';
+  el.style.animationDuration = (4 + Math.random() * 5) + 's';
+  el.style.animationDelay = Math.random() * 2 + 's';
+  el.style.fontSize = (0.8 + Math.random() * 0.9) + 'rem';
+  container.appendChild(el);
+  setTimeout(() => el.remove(), 10000);
+}
+setInterval(spawnSparkle, 800);
+
+/* ─── STARS BACKGROUND (phase 1) ─────────────── */
+const starsContainer = document.getElementById('starsBg');
+for (let i = 0; i < 100; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.left = Math.random() * 100 + '%';
+  s.style.top = Math.random() * 100 + '%';
+  const dur = (2 + Math.random() * 4).toFixed(1) + 's';
+  s.style.setProperty('--d', dur);
+  s.style.setProperty('--delay', (-Math.random() * 4).toFixed(1) + 's');
+  s.style.animationDelay = (-Math.random() * 4).toFixed(1) + 's';
+  starsContainer.appendChild(s);
+}
+
+/* ─── PHASE 1 – CODE CHECK ───────────────────── */
+const input = document.getElementById('codeInput');
+const hint  = document.getElementById('lockHint');
+
+// Allow Enter key
+input.addEventListener('keydown', e => { if (e.key === 'Enter') checkCode(); });
+input.addEventListener('input',   ()  => { input.classList.remove('error'); hint.classList.remove('show'); });
+
+function checkCode() {
+  const val = input.value.trim().toLowerCase();
+  if (val === 'sayang') {
+    input.classList.add('success');
+    hint.style.color = '#86efac';
+    hint.textContent = 'yeayy betul 💚 selamat datang~';
+    hint.classList.add('show');
+    setTimeout(() => {
+      document.getElementById('phase1').classList.add('fade-out');
+      setTimeout(showPhase2, 850);
+    }, 700);
+  } else {
+    input.classList.add('error');
+    hint.classList.add('show');
+    setTimeout(() => input.classList.remove('error'), 500);
+    input.value = '';
+  }
+}
+
+/* ─── PHASE 2 ────────────────────────────────── */
+function showPhase2() {
+  const p1 = document.getElementById('phase1');
+  p1.style.display = 'none';
+  const p2 = document.getElementById('phase2');
+  p2.classList.add('active', 'slide-in');
+}
+
+/* ─── MUSIC PLAYER ───────────────────────────── */
+const audio   = document.getElementById('audioPlayer');
+const vinyl   = document.getElementById('vinyl');
+const playBtn = document.getElementById('playBtn');
+const progressFill = document.getElementById('progressFill');
+const currentTimeEl = document.getElementById('currentTime');
+
+let isPlaying = false;
+
+function togglePlay() {
+  audio.play();
+
+  vinyl.classList.add('spinning');
+  playBtn.textContent = '⏸';
+
+  simulateProgress();
+  openNotebook();
+}
+
+// Simulated progress (remove once real audio is linked)
+let simTime = 0, simTotal = 227, simInterval = null;
+function simulateProgress() {
+  if (audio.readyState > 0) return; // real audio exists, let it update
+  clearInterval(simInterval);
+  simInterval = setInterval(() => {
+    if (!isPlaying) { clearInterval(simInterval); return; }
+    simTime = (simTime + 1) % simTotal;
+    const pct = (simTime / simTotal) * 100;
+    progressFill.style.width = pct + '%';
+    currentTimeEl.textContent = formatTime(simTime);
+  }, 1000);
+}
+
+// Real audio progress
+audio.addEventListener('timeupdate', () => {
+  if (!audio.duration) return;
+  const pct = (audio.currentTime / audio.duration) * 100;
+  progressFill.style.width = pct + '%';
+  currentTimeEl.textContent = formatTime(Math.floor(audio.currentTime));
+  document.getElementById('totalTime').textContent = formatTime(Math.floor(audio.duration));
+});
+
+function seekTrack(e) {
+  const bar = document.getElementById('progressBar');
+  const pct = e.offsetX / bar.offsetWidth;
+  if (audio.duration) audio.currentTime = pct * audio.duration;
+  else simTime = Math.floor(pct * simTotal);
+}
+
+function formatTime(s) {
+  return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+}
+
+/* ─── OPEN NOTEBOOK ──────────────────────────── */
+function openNotebook() {
+  const p2 = document.getElementById('phase2');
+  p2.classList.add('slide-out');
+  setTimeout(() => {
+    p2.classList.remove('active', 'slide-in', 'slide-out');
+    showPhase3();
+  }, 700);
+}
+
+/* ─── PHASE 3 ────────────────────────────────── */
+const pageBgs = ['#fdf8e0', '#fff0f4', '#e6f5fd', '#f0e8fa'];
+const p3 = document.getElementById('phase3');
+const backBtn = document.getElementById('backBtn');
+let currentPage = 0;
+const totalPages = 4;
+
+function showPhase3() {
+  p3.classList.add('active', 'anim-in');
+  p3.style.background = pageBgs[0];
+  backBtn.classList.add('visible');
+  buildSpiral();
+  buildDots();
+  updateNav();
+}
+
+function goBack() {
+  p3.classList.remove('active', 'anim-in');
+  backBtn.classList.remove('visible');
+  const p2 = document.getElementById('phase2');
+  p2.classList.add('active', 'slide-in');
+}
+
+// Build spiral rings
+function buildSpiral() {
+  const side = document.getElementById('spiralSide');
+  side.innerHTML = '';
+  for (let i = 0; i < 14; i++) {
+    const ring = document.createElement('div');
+    ring.className = 'spiral-ring';
+    side.appendChild(ring);
+  }
+}
+
+// Page navigation
+function buildDots() {
+  const dots = document.getElementById('pageDots');
+  dots.innerHTML = '';
+  for (let i = 0; i < totalPages; i++) {
+    const d = document.createElement('div');
+    d.className = 'page-dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goToPage(i);
+    dots.appendChild(d);
+  }
+}
+
+function changePage(dir) {
+  goToPage(currentPage + dir);
+}
+
+function goToPage(newPage) {
+  if (newPage < 0 || newPage >= totalPages) return;
+  const pages = document.querySelectorAll('.page');
+  const dir = newPage > currentPage ? 'left' : 'right';
+
+  // Exit current
+  pages[currentPage].classList.remove('active');
+  pages[currentPage].classList.add(dir === 'left' ? 'exit-left' : 'enter-right');
+
+  currentPage = newPage;
+
+  // Enter new
+  const entering = pages[currentPage];
+  entering.classList.add(dir === 'left' ? 'enter-right' : 'exit-left');
+  entering.classList.remove('exit-left', 'enter-right'); // reset
+  entering.classList.add(dir === 'left' ? 'enter-right' : 'exit-left');
+
+  // Force reflow
+  entering.getBoundingClientRect();
+  entering.classList.remove('enter-right', 'exit-left');
+  entering.classList.add('active');
+
+  // Clean up after anim
+  setTimeout(() => {
+    pages.forEach(p => p.classList.remove('exit-left', 'enter-right'));
+  }, 600);
+
+  // Update bg
+  p3.style.background = pageBgs[currentPage];
+
+  // Update controls
+  updateNav();
+}
+
+function updateNav() {
+  document.getElementById('prevBtn').disabled = currentPage === 0;
+  document.getElementById('nextBtn').disabled = currentPage === totalPages - 1;
+  document.querySelectorAll('.page-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === currentPage);
+  });
+}
+
+// Keyboard nav
+document.addEventListener('keydown', e => {
+  if (p3.classList.contains('active')) {
+    if (e.key === 'ArrowRight') changePage(1);
+    if (e.key === 'ArrowLeft') changePage(-1);
+  }
+});
+
+// Swipe (touch)
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  if (!p3.classList.contains('active')) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) changePage(dx < 0 ? 1 : -1);
+});
+</script>
+</body>
+</html>
